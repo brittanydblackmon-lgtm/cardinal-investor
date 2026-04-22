@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Cardinal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0f12;
+      --bg-card:   #13161a;
+      --border:    #1f2328;
+      --red:       #c1440e;
+      --red-dim:   rgba(193,68,14,0.12);
+      --text:      #e8e4de;
+      --muted:     #7a7570;
+      --softer:    #4a4540;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.75rem 3rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    .nav-name {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+      color: var(--red);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s;
+    }
+    .nav-link:hover { opacity: 0.7; }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 5.5rem 2rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      width: 100%;
+    }
+
+    /* pill */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--red-dim);
+      border: 1px solid rgba(193,68,14,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      width: fit-content;
+    }
+    .pill span {
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: Georgia, serif;
+    }
+
+    /* headline */
+    .headline { display: flex; flex-direction: column; gap: 0.4rem; }
+    h1 {
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    h1.dim { color: var(--muted); }
+
+    /* body copy */
+    .body-copy { display: flex; flex-direction: column; gap: 1.25rem; }
+    p { font-size: 1.05rem; line-height: 1.8; color: var(--muted); }
+
+    /* divider */
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    /* pillars */
+    .pillars { display: flex; flex-direction: column; gap: 2rem; }
+    .pillar { display: flex; gap: 2rem; align-items: flex-start; }
+    .pillar-num {
+      font-size: 0.72rem;
+      color: var(--softer);
+      letter-spacing: 0.12em;
+      padding-top: 0.2rem;
+      min-width: 2rem;
+    }
+    .pillar-title {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 0.45rem;
+    }
+    .pillar-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* label */
+    .label {
+      font-size: 0.72rem;
+      color: var(--softer);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* backer */
+    .backer { font-size: 1rem; color: var(--muted); font-style: italic; }
+
+    /* cta section */
+    .cta-section { display: flex; flex-direction: column; gap: 0.75rem; }
+    .cta-section p { margin: 0; }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.78rem 1.6rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-family: Georgia, serif;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-primary:hover { border-color: var(--muted); color: var(--text); }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.78rem 1.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-family: Georgia, serif;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--muted); color: var(--text); }
+
+    /* footer */
+    footer {
+      padding: 1.75rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer span {
+      font-size: 0.75rem;
+      color: var(--softer);
+      letter-spacing: 0.06em;
+    }
+    footer em { font-style: italic; }
+
+    /* responsive */
+    @media (max-width: 600px) {
+      nav { padding: 1.25rem 1.25rem; }
+      main { padding: 3.5rem 1.25rem 3rem; }
+      footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">
+      <span class="dot"></span>
+      <span class="nav-name">Project Cardinal</span>
+    </a>
+    <a class="nav-link" href="https://cal.com/project-cardinal/30-min-warm-intro-call" target="_blank" rel="noreferrer">
+      Get in touch →
+    </a>
+  </nav>
+
+  <main>
+
+    <div class="pill">
+      <span class="dot"></span>
+      <span>Now building · Pre-seed</span>
+    </div>
+
+    <div class="headline">
+      <h1>AI is making life-altering decisions in safety-critical industries.</h1>
+      <h1 class="dim">Nobody is accountable for any of them.</h1>
+    </div>
+
+    <div class="body-copy">
+      <p>
+        Project Cardinal is building the governance infrastructure AI accountability has never had — starting with the industries where getting it wrong has a body count.
+      </p>
+      <p>
+        We are not a compliance tool. We are not a framework. We are the independent third-party infrastructure — a Standards Body, a commercial platform, and a Certification Body — that safety-critical industries have needed since the moment AI entered them.
+      </p>
+      <p>
+        Our initial focus is aerospace and defense, where NDAA Sections 1512 and 1513 create a June 2026 compliance deadline and no independent certification infrastructure exists to meet it.
+      </p>
+    </div>
+
+    <hr />
+
+    <div class="pillars">
+
+      <div class="pillar">
+        <span class="pillar-num">01</span>
+        <div>
+          <div class="pillar-title">The Standard</div>
+          <div class="pillar-desc">A methodology built from primary research with the people inside safety-critical industries — and the people on the receiving end of the decisions those industries make. The benchmark regulators will reference.</div>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <span class="pillar-num">02</span>
+        <div>
+          <div class="pillar-title">The Platform</div>
+          <div class="pillar-desc">Built for the places where AI failure has a body count. The harm gets caught before it compounds. The audit trail exists before anyone asks for it. The decision can be explained before a lawsuit requires it.</div>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <span class="pillar-num">03</span>
+        <div>
+          <div class="pillar-title">The Certification</div>
+          <div class="pillar-desc">Independently issued. Cryptographically verifiable. Not self-assessed, not delegated to a partner with a conflict. When a company holds this certification, it means something — to regulators, to the people affected, and to the public.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr />
+
+    <div>
+      <span class="label">Backed by</span>
+      <span class="backer">Forum Ventures</span>
+    </div>
+
+    <hr />
+
+    <div class="cta-section">
+      <span class="label">We are raising a $3M pre-seed round</span>
+      <p>
+        We are working directly with organizations in aerospace, defense, and financial services. If you are building in a safety-critical industry — or investing in the infrastructure that governs it — we want to talk.
+      </p>
+      <div class="btn-row">
+        <a class="btn-primary" href="https://cal.com/project-cardinal/30-min-warm-intro-call" target="_blank" rel="noreferrer">
+          Book a conversation
+        </a>
+        <a class="btn-secondary" href="https://cardinal-site-zeta.vercel.app/" target="_blank" rel="noreferrer">
+          View research site →
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Project Cardinal</span>
+    <span><em>The infrastructure doesn't exist. We are here to build it.</em></span>
+  </footer>
+
+</body>
+</html>
